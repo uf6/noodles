@@ -1,0 +1,4 @@
+companies_dev.csv
+*.pyc
+*.egg-info
+*.DS_Store

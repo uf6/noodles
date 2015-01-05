@@ -40,4 +40,6 @@ def write_document(source, stage, document_id, data):
 
 def list_documents(source, stage):
     for (dirpath, dirnames, filenames) in walk(stage_path(source, stage)):
-        print filenames
+        for filename in filenames:
+            if filename.endswith('.json'):
+                yield filename.replace('.json', '')

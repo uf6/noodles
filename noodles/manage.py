@@ -16,6 +16,7 @@ manager = Manager(app)
 def load(source=None):
     """ Extract, analyze and index all documents. If a source type is given,
     only documents from that source will be indexed. """
+    indexer.init()
     sources = [source] if source else sorted(SOURCES.keys())
     for source in sources:
         for document_id in extract_(source):
@@ -46,6 +47,7 @@ def analyze(source=None):
 def index(source=None):
     """ Index all documents. If a source type is given, only documents
     from that source will be indexed. """
+    indexer.init()
     sources = [source] if source else sorted(SOURCES.keys())
     for source in sources:
         indexer.index_documents(source)

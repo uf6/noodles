@@ -1,3 +1,5 @@
+build/
+dist/
 companies_dev.csv
 *.pyc
 *.egg-info

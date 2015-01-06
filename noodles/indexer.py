@@ -19,9 +19,8 @@ def index_document(source, document_id):
         entity['id'] = sha1(entity.get('slug')).hexdigest()
         entities.append(entity)
     data['entities'] = entities
-    #from pprint import pprint
-    #pprint(data)
-    es.index(es_index, DOCUMENT_TYPE, data, data.get('id'))
+    if entities:
+        es.index(es_index, DOCUMENT_TYPE, data, data.get('id'))
 
 
 def index_documents(source):

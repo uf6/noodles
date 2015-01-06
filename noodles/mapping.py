@@ -27,7 +27,8 @@ DOCUMENT_MAPPING = {
             "properties": {
                 "id": {"type": "string", "index": "not_analyzed"},
                 "display_name": {"type": "string", "index": "not_analyzed"},
-                "slug": {"type": "string", "index": "not_analyzed"}
+                "slug": {"type": "string", "index": "not_analyzed"},
+                "mentions": {"type": "integer", "index": "not_analyzed"}
             }
         }
     }

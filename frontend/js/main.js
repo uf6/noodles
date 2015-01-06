@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
     search_index: 'noodles',
     datatype: 'json',
     facets: [
-        {'field': 'source.source_label', 'size': 100, 'order':'term', 'display': 'publisher'},
+        {'field': 'source_label', 'display': 'source_label'},
     ],
     paging: {
       size: 10

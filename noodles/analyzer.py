@@ -6,7 +6,7 @@ extractor = entities.EntityExtractor()
 
 def analyze_document(source, document_id):
     data = read_document(source, EXTRACTED_STAGE, document_id)
-    names = extractor.entities_from_text(data['body'])
+    names = extractor.entities_from_text(data['text'])
     data['entities'] = map(entities.prepare_for_elasticsearch, names)
 
     write_document(source, ANALYZED_STAGE, document_id, data)

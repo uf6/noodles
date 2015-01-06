@@ -9,3 +9,4 @@ python-slugify==0.1.0
 python-dateutil==2.3
 fabric
 python-Levenshtein==0.11.2
+mwclient

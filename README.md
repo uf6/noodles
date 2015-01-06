@@ -33,11 +33,21 @@ Processing with Google (Open) Refine:
 3. Create a text facet (filter) on column3 (GICS industry group) for groups "Energy" and "Materials"
 4. Export project/file as comma-separated CSV file
 5. Open file, remove 2nd, 3rd column (just company name remaining), rename column header to "Name" and add second empty column "country"
+6. Save as australia_YYYY-MM-DD.csv
 
 ### Concession Data - OpenOil
 
 - Source: http://repository.openoil.net/wiki/Concession_Layer_Methodology#Sourcing
-- Type: -
+- Type: CSV File(s)
+
+Processing with Google Refine:
+
+1. Download TOTAL file with all concessions (if available) or otherwise download country concession files and concatenate to one file with csvtoolkit -> csvstack command
+2. Load into Google Refine
+3. Delete all columns except "ConcessionContractor"
+4. Split "ConcessionContractor" values and distribute to different rows ("Edit Cells" -> "Split multi-valued cells...")
+5. Export as CSV file, rename "ConcessionContractor" column to "Name", add empty "County" column
+6. Save as australia_YYYY-MM-DD.csv
 
 ### SEC
 

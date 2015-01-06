@@ -14,7 +14,7 @@ import glob
 
 
 norm_reqs = (
-    ('ltd.', 'limited'),
+    ('ltd\.', 'limited'),
     (' bv ', 'b.v.'),
     )
 
@@ -24,14 +24,6 @@ def normalize(text):
     for (rgx, replacement) in norm_reqs:
         text = re.sub(rgx, replacement, text)
     return text
-
-def get_company_names():
-    datafiles = glob.glob(os.path.dirname(os.path.realpath(__file__)) + '/../data/*csv')
-    names = set()
-    for fn in datafiles:
-        rows = csv.reader(open(fn, 'r'))
-        names.update(normalize(row[0]) for row in rows)
-    return names
 
 def prepare_for_elasticsearch(entity_name):
     """
@@ -46,10 +38,18 @@ class EntityExtractor(object):
     MIN_TERM_LENGTH = 6
 
     def __init__(self):
-        self.company_names = [x for x in get_company_names() if len(x) >= self.MIN_TERM_LENGTH]
-        normed = [re.escape(normalize(x)) for x in self.company_names]
-        joined = '|'.join(normed)
+        escaped = map(re.escape, self.get_company_names())
+        joined = '|'.join(escaped)
         self.regex = re.compile('(' + joined + ')')
+
+    def get_company_names(self):
+        datafiles = glob.glob(os.path.dirname(os.path.realpath(__file__)) + '/../data/*csv')
+        names = set()
+        for fn in datafiles:
+            rows = csv.reader(open(fn, 'r'))
+            names.update(normalize(row[0]) for row in rows if len(normalize(row[0])) >= self.MIN_TERM_LENGTH)
+        return names
+
 
     def entities_from_text(self, text):
         return self.regex.findall(normalize(text))

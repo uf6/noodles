@@ -1,4 +1,5 @@
 import logging
+from hashlib import sha1
 from pyelasticsearch.exceptions import IndexAlreadyExistsError
 
 from noodles.core import es, es_index

@@ -13,6 +13,7 @@ import csv
 import string
 import os
 import glob
+from collections import defaultdict
 
 from noodles import default_settings
 
@@ -44,23 +45,12 @@ def eliminate_company_labels(coname):
     if len(coname.split(' ')) > 2:
         coname = regex.sub('', coname)
     return coname
-        
-
 
 def normalize(text):
     text = text.lower()
     for (rgx, replacement) in norm_reqs:
         text = re.sub(rgx, replacement, text)
     return text
-
-def prepare_for_elasticsearch(entity_name):
-    """
-    Turn company name into an ickle bit of json, ready to be inserted
-    into the json repository
-    """
-    return {
-        'display_name': entity_name,
-        'slug': entity_name}
 
 class EntityExtractor(object):
 
@@ -83,10 +73,25 @@ class EntityExtractor(object):
         names = set()
         for fn in datafiles:
             rows = csv.reader(open(fn, 'r'))
+            rows.next() # skip header
             names.update(normalize(row[0]) for row in rows if len(normalize(row[0])) >= self.MIN_TERM_LENGTH)
         if self.STRIP_COMPANY_LABELS:
             names = set(eliminate_company_labels(x) for x in names)
         return names
+        
+    def es_entities(self, text):
+        raw = self.entities_from_text(text)
+        found = defaultdict(int)
+        for name in raw:
+            found[name] += 1
+        output = []
+        for entity_name, freq in found.items():
+            output.append({
+                'display_name': entity_name,
+                'slug': entity_name,
+                'mentions': freq,
+            })
+        return(output)
 
 
     def entities_from_text(self, text):

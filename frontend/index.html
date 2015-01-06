@@ -18,7 +18,11 @@
             }
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="js/vendor/facetview/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.css">
+        <link rel="stylesheet" href="js/vendor/facetview/css/facetview.css">
+	<link rel="stylesheet" href="js/vendor/select2-3.5.2/select2.css">
+        <link rel="stylesheet" href="js/vendor/select2-3.5.2/select2-bootstrap.css">
+	<link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -57,7 +61,10 @@
       <div class="container">
         <h1>Hi!</h1>
         <p>Search all this formidable databases...</p>
-        <div class="facet-view-simple"></div>
+        <input type="hidden" id="lady" style="width:300px" class="input-xlarge" />
+	<input type="hidden" id="tramp" style="width:300px" class="input-xlarge" />
+
+	<div class="facet-view-simple"></div>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
       </div>
     </div>
@@ -74,11 +81,13 @@
 	<script type="text/javascript" src="js/vendor/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/vendor/facetview/vendor/linkify/1.0/jquery.linkify-1.0-min.js"></script>
-	<link rel="stylesheet" href="js/vendor/facetview/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.css">
 	<script type="text/javascript" src="js/vendor/facetview/vendor/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.min.js"></script>
 	<script type="text/javascript" src="js/vendor/facetview/jquery.facetview.js"></script>
-	<link rel="stylesheet" href="js/vendor/facetview/css/facetview.css">
 	<script type="text/javascript" src="js/vendor/d3.min.js"></script>
+	<script type="text/javascript" src="js/vendor/elasticsearch-js/elasticsearch.jquery.min.js"></script>
+	<script type="text/javascript" src="js/vendor/elastic.min.js"></script>
+        
+        <script type="text/javascript" src="js/vendor/select2-3.5.2/select2.min.js"></script>
 
         <script src="js/main.js"></script>
 

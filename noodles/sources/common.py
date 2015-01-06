@@ -25,5 +25,6 @@ class Source(object):
             'source_label': self.LABEL,
             'source_url': self.URL
         }
+        #print data
         write_document(self.name, EXTRACTED_STAGE, id, data)
         return id

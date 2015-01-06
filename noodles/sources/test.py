@@ -7,4 +7,4 @@ class TestSource(Source):
     URL = "http://test.com"
 
     def extract(self):
-        yield self.emit(title='Test!', text='This is a test.', id='test')
+        yield self.emit(title='Test!', text='This is a test, mentioning Aastra Technologies Ltd.', id='test')

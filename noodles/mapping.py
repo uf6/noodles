@@ -28,7 +28,13 @@ DOCUMENT_MAPPING = {
                 "id": {"type": "string", "index": "not_analyzed"},
                 "display_name": {"type": "string", "index": "not_analyzed"},
                 "slug": {"type": "string", "index": "not_analyzed"},
-                "mentions": {"type": "integer", "index": "not_analyzed"}
+                "mentions": {"type": "integer", "index": "not_analyzed"},
+                "suggest": {
+                    "type": "completion",
+                    "index_analyzer": "simple",
+                    "search_analyzer": "simple",
+                    "payloads": False
+                }
             }
         }
     }

@@ -48,6 +48,9 @@ class AllAfricaSource(Source):
                 article_url = urljoin(url, a.get('href', '/'))
                 if 'allafrica.com/stories/' not in article_url:
                     continue
-                yield self.get_article(article_url)
+                try:
+                    yield self.get_article(article_url)
+                except Exception, e:
+                    log.exception(e)
 
         

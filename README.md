@@ -1,21 +1,43 @@
-noodles
-=======
+# noodles
 
 We eat our data in a messy fashion, thank you.
 
-Requirements
-------------
+## Requirements
 
 - Flask, http://flask.pocoo.org/
 - Elasticsearch, http://www.elasticsearch.org/
 
-Data
-----
+## Data
 
-Data is used from https://github.com/holgerd77/openoil-companies/
+### Canada
 
-Installation
-------------
+- Source: http://www.tmxmoney.com/en/sector_profiles/energy.html
+- Type: XLS File
+
+Manual Processing:
+
+1. Grab file from source (Oil & Gas Companies) as xls file
+2. Create to separate files fom both sheets in file with columns "Name", "HQ Location"
+3. Rename: "HQ Location" -> "Country"
+4. Save both files as canada1.csv, canada2.csv with , as delimiter (and , quoted in company names)
+
+### Australia
+
+- Source: http://www.asx.com.au/asx/research/ASXListedCompanies.csv
+- Type: -
+
+### Concession Data - OpenOil
+
+- Source: http://repository.openoil.net/wiki/Concession_Layer_Methodology#Sourcing
+- Type: -
+
+### SEC
+
+- Source: -
+- Type: -
+
+
+## Installation
 
 Getting Started:
 
@@ -49,8 +71,8 @@ $ python noodles/manage.py ingest edgar
 $ python noodles/manage.py index edgar
 ```
 
-Run server
-----------
+## Run server
+
 ```
 $ python noodles/manage.py runserver -p 7777
 ```

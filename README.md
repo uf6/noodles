@@ -24,7 +24,15 @@ Manual Processing:
 ### Australia
 
 - Source: http://www.asx.com.au/asx/research/ASXListedCompanies.csv
-- Type: -
+- Type: CSV File
+
+Processing with Google (Open) Refine:
+
+1. Download file from source
+2. Create a new project from within OpenRefine (http://openrefine.org)
+3. Create a text facet (filter) on column3 (GICS industry group) for groups "Energy" and "Materials"
+4. Export project/file as comma-separated CSV file
+5. Open file, remove 2nd, 3rd column (just company name remaining), rename column header to "Name" and add second empty column "country"
 
 ### Concession Data - OpenOil
 

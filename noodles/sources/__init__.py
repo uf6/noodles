@@ -1,10 +1,12 @@
 from noodles.sources.test import TestSource
 from noodles.sources.edgar import EdgarSource
+from noodles.sources.allafrica import AllAfricaSource
 
 
 SOURCES = {
     'test': TestSource,
-    'edgar': EdgarSource
+    'allafrica': AllAfricaSource,
+    #'edgar': EdgarSource
 }
 
 

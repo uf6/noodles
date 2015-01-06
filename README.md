@@ -6,8 +6,8 @@ We eat our data in a messy fashion, thank you.
 Requirements
 ------------
 
-- Flask (http://flask.pocoo.org/)
-- Elasticsearch (http://www.elasticsearch.org/)
+- Flask, http://flask.pocoo.org/
+- Elasticsearch, http://www.elasticsearch.org/
 
 Installation
 ------------

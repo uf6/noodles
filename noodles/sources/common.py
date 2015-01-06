@@ -13,12 +13,13 @@ class Source(object):
     def extract(self):
         raise NotImplemented()
 
-    def emit(self, body=None, title=None, url=None, id=None):
+    def emit(self, text=None, html=None, title=None, url=None, id=None):
         id = id or url or title
         id = sha1(unicode(id).encode('utf-8')).hexdigest()
 
         data = {
-            'body': body,
+            'text': text,
+            'html': html,
             'title': title,
             'url': url,
             'source_label': self.LABEL,

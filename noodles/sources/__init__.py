@@ -1,8 +1,10 @@
 from noodles.sources.test import TestSource
+from noodles.sources.edgar import EdgarSource
 
 
 SOURCES = {
-    'test': TestSource
+    'test': TestSource,
+    'edgar': EdgarSource
 }
 
 

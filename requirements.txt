@@ -10,3 +10,4 @@ python-dateutil==2.3
 fabric
 python-Levenshtein==0.11.2
 mwclient
+pdfminer==20140328

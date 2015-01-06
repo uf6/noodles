@@ -9,6 +9,11 @@ Requirements
 - Flask, http://flask.pocoo.org/
 - Elasticsearch, http://www.elasticsearch.org/
 
+Data
+----
+
+Data is used from https://github.com/holgerd77/openoil-companies/
+
 Installation
 ------------
 

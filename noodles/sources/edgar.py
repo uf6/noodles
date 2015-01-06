@@ -3,6 +3,7 @@ import ftplib
 import logging
 import urllib
 from hashlib import sha1
+import traceback
 
 from werkzeug.utils import secure_filename
 from lxml import etree, html
@@ -104,5 +105,9 @@ class EdgarSource(Source):
 
     def extract(self):
         for file_path in self.monthly_indexes():
-            for filing in self.parse_feed(file_path):
-                yield self.emit(**filing)
+            try:
+                for filing in self.parse_feed(file_path):
+                    yield self.emit(**filing)
+            except Exception:
+                print('broken by filing %s' % file_path)
+                traceback.print_exc()

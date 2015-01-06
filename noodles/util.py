@@ -27,6 +27,11 @@ def read_document(source, stage, document_id):
         return None
 
 
+def has_document(source, stage, document_id):
+    file_path = document_path(source, stage, document_id)
+    return path.isfile(file_path)
+
+
 def write_document(source, stage, document_id, data):
     file_path = document_path(source, stage, document_id)
     file_dir = path.dirname(file_path)

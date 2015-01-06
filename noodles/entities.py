@@ -4,14 +4,12 @@ Find all company names in a piece of text
 extractor = EntityExtractor()
 entities = extractor.entities_from_text(text)
 > ['acme incorporated', 'fubar limited', ...]
-
-TODO:
- - work out a standard form to normalize company names to
- - import company names into the massive regex
 """
 
+COMPANY_SOURCE_FILE = '/tmp/companies_dev.csv'
 
 import re
+import csv
 
 norm_reqs = (
     ('ltd.', 'limited'),
@@ -25,7 +23,9 @@ def normalize(text):
     return text
 
 def get_company_names():
-    return ['ABC Inc', 'Joost Ltd.']
+    rows = csv.reader(open(COMPANY_SOURCE_FILE, 'r'))
+    names = [normalize(row[0]) for row in rows]
+    return names
 
 class EntityExtractor(object):
 

@@ -6,8 +6,8 @@ from noodles.sources.allafrica import AllAfricaSource
 
 SOURCES = {
     'test': TestSource,
-    #'allafrica': AllAfricaSource,
-    #'openoil': OpenOilSource,
+    'allafrica': AllAfricaSource,
+    'openoil': OpenOilSource,
     'edgar': EdgarSource
 }
 

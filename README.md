@@ -3,16 +3,23 @@ noodles
 
 We eat our data in a messy fashion, thank you.
 
-Getting Started
----------------
+Requirements
+------------
+
+- Flask (http://flask.pocoo.org/)
+- Elasticsearch (http://www.elasticsearch.org/)
+
+Installation
+------------
+
+Getting Started:
 
 ```
 $ cd /opt
 $ git clone https://github.com/uf6/noodles
 ```
 
-Docker for Elasticsearch (optional)
------------------------------------
+Docker for Elasticsearch (optional):
 
 ```
 $ docker pull dockerfile/elasticsearch
@@ -29,8 +36,8 @@ $ docker run -d -p 9200:9200 -p 9300:9300 -v /opt/noodles-elastic/:/data dockerf
 $ /usr/bin/docker run -p 8089:80 -v /opt/noodles:/src -e VIRTUAL_HOST=noodles.iilab.org --privileged -d -t --name noodles iilab/static
 ````
 
-Setup
------
+Setup:
+
 ```
 $ python setup.py install
 $ python noodles/manage.py ingest edgar

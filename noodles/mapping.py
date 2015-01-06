@@ -14,7 +14,8 @@ DOCUMENT_MAPPING = {
         "url": {"type": "string", "index": "not_analyzed"},
         "source_label": {"type": "string", "index": "not_analyzed"},
         "source_url": {"type": "string", "index": "not_analyzed"},
-        "body": {"type": "string", "index": "analyzed"},
+        "text": {"type": "string", "index": "analyzed"},
+        "html": {"type": "string", "index": "analyzed"},
         # "created_at": {"type": "date", "index": "not_analyzed"},
         # "updated_at": {"type": "date", "index": "not_analyzed"},
         "entities": {

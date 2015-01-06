@@ -16,10 +16,11 @@ def index_document(source, document_id):
     data['id'] = document_id
     entities = []
     for entity in data.get('entities', []):
+        entity['id'] = sha1(entity.get('slug')).hexdigest()
         entities.append(entity)
     data['entities'] = entities
-    from pprint import pprint
-    pprint(data)
+    #from pprint import pprint
+    #pprint(data)
     es.index(es_index, DOCUMENT_TYPE, data, data.get('id'))
 
 

@@ -10,7 +10,7 @@
  	  {{> formSelectTemplate}}
 	  <div class="row">
 
-		  {{> tabular table=TabularTables.Documents selector=selector class="table table-striped table-bordered table-condensed"}}
+		  {{> tabular table=TabularTables.Documents selector=selector class="table table-striped table-bordered table-condensed" }}
 
 	  </div>
 	</div>
@@ -18,21 +18,23 @@
 
 <template name="formSelectTemplate">
   {{#autoForm id="formSelect" schema=facetedFormSchema}}
-  <fieldset>
-    <legend>Search</legend>
-    <div class="row">
-      <div class="col-12">
-          {{> afQuickField name="name"}}
-      </div>
-      <div class="col-6">
-        {{> afQuickField name="source"}}
-      </div>
+  <div class="row">
+    <div class="col-md-4">
+      <fieldset>
+        <legend>Search</legend>
+        {{> afQuickField name="name" value=currentCompanyValue}}
+      </fieldset>
     </div>
-    <div class="row">
+    <div class="col-md-4">
+      <fieldset>
+        {{> afQuickField name="source" value=currentSourceValue}}
+      </fieldset>
+    </div>
+    <div class="col-md-4">
       <button type="submit" class="btn btn-primary">Submit</button>
-      <button type="reset" class="btn btn-default">Reset</button>
+      <button type="reset" class="btn btn-default reset">Reset</button>
     </div>
-  </fieldset>
+  </div>      
   {{/autoForm}}
 </template>
 

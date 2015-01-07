@@ -70,7 +70,7 @@ Schema.formSchema = new SimpleSchema({
     }
   },
   source: {
-    type: [String],
+    type: String,
     index: true,
     unique: true,
     optional: true,
@@ -81,11 +81,10 @@ Schema.formSchema = new SimpleSchema({
         Sources.find({}, {sort: {name: 1}, reactive:true}).forEach(function(itm) {
           ret[itm.slug] = itm.name
         });
-        console.log(ret)
         return ret
       },
       afFieldInput: {
-        multiple: true
+//        multiple: true
       }
     } 
   }  
@@ -94,32 +93,6 @@ Schema.formSchema = new SimpleSchema({
 SimpleSchema.messages({
   notUnique: '[label] must be unique.',
 });
-/*
-EasySearch.createSearchIndex('documents', {
-  'field' : ['entities'],
-  'collection' : Documents.find().map(function(doc) {return doc}),
-  'limit' : 20,
-  'props' : {
-    'filteredSources' : [],
-    'filteredCountries' : [],
-  },
-  'query' : function (searchString) {
-    // Default query that will be used for searching
-    var query = EasySearch.getSearcher(this.use).defaultQuery(this, searchString);
-
-    // filter for categories if set
-    if (this.props.filteredSources.length > 0) {
-      //console.log(this.props.filteredSources)
-      query.source_label = { $in : this.props.filteredSources };
-    }
-
-    if (this.props.filteredCountries.length > 0) {
-      query.url = { $in : this.props.filteredCountries };
-    }
-
-    return query;
-  }
-});*/
 
 TabularTables = {};
 
@@ -146,13 +119,15 @@ TabularTables.Documents = new Tabular.Table({
     {
       tmpl: Meteor.isClient && Template.documentOpenCell
     }
-  ]
+  ],
+  bFilter: false,
+
 });
 
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault("name", []);
-  Session.setDefault("source", []);
+  Session.setDefault("source", "");
   
   Meteor.startup(function() {
 
@@ -160,20 +135,29 @@ if (Meteor.isClient) {
 
   })
 
+/*
+/ Submission hooks and events for the autoform 
+/**/
 
   AutoForm.hooks({
     formSelect: {
       onSubmit: function (insertDoc, updateDoc, currentDoc) {
         if (insertDoc.name) {
-          console.log(insertDoc)
-          Session.set("name", insertDoc.name.map(function(val) {
-            return val
-          }))
+          entities_array = []
+          entities_array = Session.get("name")
+          console.log('docname')
+          console.log(insertDoc.name)
+          insertDoc.name.forEach(function(val) {
+            entities_array.push({entities_text: { '$regex' : val }})            
+          })
+          console.log('started@!')
+          console.log(entities_array)
+          Session.set("name", entities_array)
+          console.log(entities_array)
+          console.log('went through!')
         }
         if (insertDoc.source) {
-          Session.set("source", insertDoc.source.map(function(val) {
-            return val
-          }))
+          Session.set("source", insertDoc.source)
         }
         this.done();
         return false;
@@ -181,48 +165,52 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.formSelectTemplate.events({  
+      'click button.reset': function () {
+        this.name = []
+        this.source = "";
+        Session.set("name", []); 
+        Session.set("source", "");
+        return false;
+      }
+  });
+
   Template.body.created = function () {
-    // set up reactive computation
-
-    this.autorun(function () {
-      var instance = EasySearch.getComponentInstance(
-          { index : 'documents' }
-      );
-
-      instance.on('autosuggestSelected', function (values) {
-        // run every time the autosuggest selection changes
-        if (values && values.length) {
-          entity_selector = Session.get("entity_selector")
-          Session.set("entity_selector", values.map(function(val) {
-            return {title: val.value}
-          }))
-        }
-      });
-    });
+    //
   };
 
   Template.formSelectTemplate.helpers({
     facetedFormSchema: function() {
       return Schema.formSchema;
+    },
+    currentCompanyValue: function() {
+      console.log(Session.get("name"))
+      return Session.get("name")
+    },
+    currentSourceValue: function() {
+      return Session.get("source")
     }
   });
 
   Template.body.helpers({
     selector: function () {
       sel = {}
-      if (Session.get("source").length != 0) {
-        sel.source_slug = Session.get("source")[0]
+      if (Session.get("source")) {
+        sel.source_slug = Session.get("source")
       } 
-/*      if (Session.get("name").length != 0) {
-        var queryText = Session.get("name")[0]
-        sel = {entities_text: { $regexp: queryText }}
-      }*/
+//      if (Session.get("coutry").length != 0) {
+//        sel.$and = Session.get("country")
+//      } 
+      if (Session.get("name").length != 0) {
+        sel.$and = Session.get("name")
+      }
+//      sel = {title: "ANADARKO PETROLEUM CORP (0000773910) (Filer)"};
+//      sel = {entities_text: "ANADARKO PETROLEUM CORP"}
+//      sel = {source_label: "SEC EDGAR"};
+//      sel = {url: "http://www.sec.gov/Archives/edgar/data/773910/000119312507151814/d8k.htm"};
+
       console.log(sel)
       return sel;
-//      return {title: "ANADARKO PETROLEUM CORP (0000773910) (Filer)"};
-//      return {source_label: "SEC EDGAR"};
-//      return {url: "http://www.sec.gov/Archives/edgar/data/773910/000119312507151814/d8k.htm"};
-//      return {title: "ANADARKO PETROLEUM CORP (0000773910) (Filer)", source_label: "SEC EDGAR"}
     },
     documents: function () {
       return Documents.find({});

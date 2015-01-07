@@ -1,5 +1,6 @@
 import logging
 from flask import Flask
+from pymongo import MongoClient
 from pyelasticsearch import ElasticSearch
 
 from noodles import default_settings
@@ -18,3 +19,7 @@ app.config.from_envvar('NOODLES_SETTINGS', silent=True)
 
 es = ElasticSearch(app.config.get('ELASTICSEARCH_URL'))
 es_index = app.config.get('ELASTICSEARCH_INDEX')
+
+mongo = MongoClient(app.config.get('MONGO_URL'), app.config.get('MONGO_PORT'))
+mongodb = mongo[app.config.get('MONGO_DATABASE')]
+collection = mongodb[app.config.get('MONGO_COLLECTION')]

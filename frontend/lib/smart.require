@@ -1,0 +1,18 @@
+{
+	"famous": {
+		"git": "https://github.com/Famous/famous.git",
+		"root": "src"
+	},
+	"famous.polyfills": {
+		"git": "https://github.com/Famous/polyfills.git"
+	},
+	"library": {
+		"git": "https://github.com/raix/library.git"
+	},
+	"famous-polyfills": {
+		"alias": "famous.polyfills"
+	},
+	"ljs": {
+		"git": "https://github.com/loop-recur/lambdajs.git"
+	}
+}

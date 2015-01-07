@@ -6,3 +6,4 @@ companies_dev.csv
 *.egg-info
 *.DS_Store
 noodlepot/*
+*/.meteor/*

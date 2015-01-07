@@ -67,6 +67,32 @@ $ cd /opt
 $ git clone https://github.com/uf6/noodles
 ```
 
+Meteor Frontend
+
+ * install meteor - https://www.meteor.com/install - 
+
+```
+$ curl https://install.meteor.com/ | sh
+$ cd noodles/frontend
+$ meteor
+```
+
+ * load data into Mongo's meteor
+
+Default local settings are for an external Mongo database. To run the importer with the meteor MongoDB, modify local_settings to 
+```
+MONGO_URL = 'localhost'
+MONGO_PORT = 3002
+MONGO_DATABASE = 'meteor'
+MONGO_COLLECTION = 'documents'
+```
+
+In a python virtualenv
+```
+$ python noodles/manage.py load_mongo
+```
+
+
 Docker for Elasticsearch (optional):
 
 ```

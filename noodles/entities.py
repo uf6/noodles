@@ -55,7 +55,6 @@ def normalize(text):
     return text
 
 
-
 class EntityExtractor(object):
 
     # ignore companies with names shorter than this
@@ -65,6 +64,9 @@ class EntityExtractor(object):
     # Should we remove Ltd, GmbH etc from company names before searching + indexing?
     # NB this will generate more matches, at the cost of more false positives
     STRIP_COMPANY_LABELS = True
+    
+    # Eliminate some broken data
+    BLACKLIST = set(['company', 'ltd', 'petroleum', 'limited'])
 
 
     def __init__(self):
@@ -82,6 +84,8 @@ class EntityExtractor(object):
                 pretty_name = row[0]
                 ugly_name = normalize(pretty_name)
                 if len(ugly_name) < self.MIN_TERM_LENGTH:
+                    continue
+                if ugly_name in self.BLACKLIST:
                     continue
                 if self.STRIP_COMPANY_LABELS:
                     ugly_name = eliminate_company_labels(ugly_name)
@@ -107,12 +111,12 @@ class EntityExtractor(object):
         return self.regex.findall(normalize(text))
 
     def ami_company_names(self):
-        fname = '/tmp/gout.xml'
+        fname = '/tmp/company_regex.xml'
         compound = etree.Element('compoundRegex', title='Company')
         for (ugly, pretty) in self.company_names.items():
             try:
-                rgx = etree.Element('regex', weight="1.0", fields=pretty)
-                rgx.text = '(?i)\W(%s)\W' % ugly
+                rgx = etree.Element('regex', weight="1.0", fields='Company')
+                rgx.text = '(?i)\W(%s)\W' % re.escape(ugly)
                 compound.append(rgx)
             except Exception:
                 print(pretty, ugly)
@@ -122,5 +126,6 @@ class EntityExtractor(object):
         return compound
         
 
-
-
+if __name__ == '__main__':
+    extr = EntityExtractor()
+    extr.ami_company_names()

@@ -15,10 +15,13 @@ def load_document(source, document_id):
     data = read_document(source, ANALYZED_STAGE, document_id)
     data['id'] = document_id
     entities = []
+    entities_text = ""
     for entity in data.get('entities', []):
         entity['id'] = sha1(entity.get('slug')).hexdigest()
         entities.append(entity)
+        entities_text = entities_text + entity.get('slug')
     data['entities'] = entities
+    data['source_slug'] = data.get('source_label').replace (" ", "_").lower()
     if entities:
         collection.insert(data)
 

@@ -6,6 +6,9 @@ We eat our data in a messy fashion, thank you.
 
 - Flask, http://flask.pocoo.org/
 - Elasticsearch, http://www.elasticsearch.org/
+- Elasticsearch.js, http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/
+- Facetview, https://github.com/okfn/facetview
+- d3.js, http://d3js.org/
 
 ## Data
 

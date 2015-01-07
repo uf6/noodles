@@ -111,9 +111,12 @@ class EntityExtractor(object):
         return self.regex.findall(normalize(text))
 
     def ami_company_names(self):
-        fname = '/tmp/company_regex.xml'
+        fname = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/data/company_regex.xml'
         compound = etree.Element('compoundRegex', title='Company')
-        for (ugly, pretty) in self.company_names.items():
+        company_names = sorted(self.company_names.items(),
+                               key = lambda x: len(x[0]),
+                               reverse=True)
+        for (ugly, pretty) in company_names:
             try:
                 rgx = etree.Element('regex', weight="1.0", fields='Company')
                 rgx.text = '(?i)\W(%s)\W' % re.escape(ugly)

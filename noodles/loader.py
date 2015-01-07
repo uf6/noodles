@@ -21,6 +21,7 @@ def load_document(source, document_id):
         entities.append(entity)
         entities_text = entities_text + entity.get('slug')
     data['entities'] = entities
+    data['entities_text'] = entities_text
     data['source_slug'] = data.get('source_label').replace (" ", "_").lower()
     if entities:
         collection.insert(data)

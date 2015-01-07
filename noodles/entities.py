@@ -13,7 +13,9 @@ import csv
 import string
 import os
 import glob
+import traceback
 from collections import defaultdict
+from lxml import etree
 
 from noodles import default_settings
 
@@ -51,6 +53,8 @@ def normalize(text):
     for (rgx, replacement) in norm_reqs:
         text = re.sub(rgx, replacement, text)
     return text
+
+
 
 class EntityExtractor(object):
 
@@ -101,4 +105,22 @@ class EntityExtractor(object):
 
     def entities_from_text(self, text):
         return self.regex.findall(normalize(text))
+
+    def ami_company_names(self):
+        fname = '/tmp/gout.xml'
+        compound = etree.Element('compoundRegex', title='Company')
+        for (ugly, pretty) in self.company_names.items():
+            try:
+                rgx = etree.Element('regex', weight="1.0", fields=pretty)
+                rgx.text = '(?i)\W(%s)\W' % ugly
+                compound.append(rgx)
+            except Exception:
+                print(pretty, ugly)
+                traceback.print_exc()
+        with open(fname, 'w') as outf:
+            outf.write(etree.tostring(compound))
+        return compound
+        
+
+
 

@@ -1,6 +1,6 @@
 from hashlib import sha1
 
-from noodles.util import write_document, EXTRACTED_STAGE
+from noodles.util import write_document, has_document, EXTRACTED_STAGE
 
 
 class Source(object):
@@ -13,9 +13,17 @@ class Source(object):
     def extract(self):
         raise NotImplemented()
 
-    def emit(self, text=None, html=None, title=None, url=None, id=None):
+    def get_id(self, title=None, url=None, id=None):
         id = id or url or title
-        id = sha1(unicode(id).encode('utf-8')).hexdigest()
+        return sha1(unicode(id).encode('utf-8')).hexdigest()
+
+    def check(self, title=None, url=None, id=None):
+        id = self.get_id(title=title, url=url, id=id)
+        if has_document(self.name, EXTRACTED_STAGE, id):
+            return id
+
+    def emit(self, text=None, html=None, title=None, url=None, id=None):
+        id = self.get_id(title=title, url=url, id=id)
 
         data = {
             'text': text,

@@ -70,14 +70,19 @@ class EntityExtractor(object):
 
     def get_company_names(self):
         datafiles = glob.glob(os.path.dirname(os.path.realpath(__file__)) + '/../data/*csv')
-        names = set()
+        self.company_names = {}
         for fn in datafiles:
             rows = csv.reader(open(fn, 'r'))
             rows.next() # skip header
-            names.update(normalize(row[0]) for row in rows if len(normalize(row[0])) >= self.MIN_TERM_LENGTH)
-        if self.STRIP_COMPANY_LABELS:
-            names = set(eliminate_company_labels(x) for x in names)
-        return names
+            for row in rows:
+                pretty_name = row[0]
+                ugly_name = normalize(pretty_name)
+                if len(ugly_name) < self.MIN_TERM_LENGTH:
+                    continue
+                if self.STRIP_COMPANY_LABELS:
+                    ugly_name = eliminate_company_labels(ugly_name)
+                self.company_names[ugly_name] = pretty_name
+        return self.company_names.keys()
         
     def es_entities(self, text):
         raw = self.entities_from_text(text)
@@ -87,7 +92,7 @@ class EntityExtractor(object):
         output = []
         for entity_name, freq in found.items():
             output.append({
-                'display_name': entity_name,
+                'display_name': self.company_names[entity_name],
                 'slug': entity_name,
                 'mentions': freq,
             })

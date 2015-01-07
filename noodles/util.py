@@ -1,6 +1,8 @@
 import json
 from os import path, makedirs, walk
 
+from flask import Response, request
+
 from noodles.core import app
 
 EXTRACTED_STAGE = 'parsed'
@@ -27,6 +29,11 @@ def read_document(source, stage, document_id):
         return None
 
 
+def has_document(source, stage, document_id):
+    file_path = document_path(source, stage, document_id)
+    return path.isfile(file_path)
+
+
 def write_document(source, stage, document_id, data):
     file_path = document_path(source, stage, document_id)
     file_dir = path.dirname(file_path)
@@ -43,3 +50,14 @@ def list_documents(source, stage):
         for filename in filenames:
             if filename.endswith('.json'):
                 yield filename.replace('.json', '')
+
+
+def jsonify(obj, status=200, headers=None):
+    """ Custom JSONificaton to support obj.to_dict protocol. """
+    data = json.dumps(obj)
+    if 'callback' in request.args:
+        cb = request.args.get('callback')
+        data = '%s && %s(%s)' % (cb, cb, data)
+    return Response(data, headers=headers,
+                    status=status,
+                    mimetype='application/json')

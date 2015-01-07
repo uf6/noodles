@@ -17,6 +17,11 @@ def index_document(source, document_id):
     entities = []
     for entity in data.get('entities', []):
         entity['id'] = sha1(entity.get('slug')).hexdigest()
+        entity['suggest'] = {
+            'input': [entity.get('slug'), entity.get('display_name')],
+            'output': entity.get('display_name'),
+            'weight': entity.get('mentions')
+        }
         entities.append(entity)
     data['entities'] = entities
     if entities:

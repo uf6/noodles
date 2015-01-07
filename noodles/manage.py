@@ -4,8 +4,7 @@ from flask.ext.script import Manager
 
 from noodles.views import app
 from noodles.sources import SOURCES, extract as extract_
-from noodles import analyzer, indexer, loader
-
+from noodles import analyzer, indexer, grapher, loader
 
 log = logging.getLogger(__name__)
 manager = Manager(app)
@@ -61,6 +60,15 @@ def index(source=None):
     sources = [source] if source else sorted(SOURCES.keys())
     for source in sources:
         indexer.index_documents(source)
+
+
+@manager.command
+def graph(source=None):
+    """ Index all documents. If a source type is given, only documents
+    from that source will be indexed. """
+    sources = [source] if source else sorted(SOURCES.keys())
+    for source in sources:
+        grapher.add_documents(source)
 
 
 if __name__ == "__main__":

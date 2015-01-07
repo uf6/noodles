@@ -2,13 +2,15 @@ from noodles.sources.test import TestSource
 from noodles.sources.edgar import EdgarSource
 from noodles.sources.openoil import OpenOilSource
 from noodles.sources.allafrica import AllAfricaSource
+from noodles.sources.rigzone import RigZoneSource
 
 
 SOURCES = {
     'test': TestSource,
     'allafrica': AllAfricaSource,
     'openoil': OpenOilSource,
-    'edgar': EdgarSource
+    'edgar': EdgarSource,
+    'rigzone': RigZoneSource
 }
 
 

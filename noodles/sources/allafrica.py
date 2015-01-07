@@ -17,6 +17,9 @@ class AllAfricaSource(Source):
     URL = "http://allafrica.com/"
 
     def get_article(self, url):
+        id = self.check(url=url)
+        if id is not None:
+            return id
         file_name = secure_filename(url)
         file_path = os.path.join(stage_path(self.name, 'stories'), file_name)
         if not os.path.isfile(file_path):
